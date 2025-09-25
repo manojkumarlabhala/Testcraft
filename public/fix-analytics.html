@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Analytics Functions</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        .warning { color: orange; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 5px; max-height: 200px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <h1>Fix Analytics Error</h1>
+    <p>This will create the missing database functions needed for analytics.</p>
+
+    <button onclick="createFunctions()">Create Analytics Functions</button>
+    <div id="result"></div>
+
+    <script>
+        async function createFunctions() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>Creating analytics functions...</p>';
+
+            try {
+                const response = await fetch('/api/admin/create-analytics-functions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    result.innerHTML = `
+                        <h2 class="success">✅ Analytics Functions Created Successfully!</h2>
+                        <p>The analytics error should now be fixed.</p>
+                        <pre>${JSON.stringify(data.stats, null, 2)}</pre>
+                        <p><strong>Next steps:</strong></p>
+                        <ul>
+                            <li>Refresh the dashboard page</li>
+                            <li>The analytics widget should now load properly</li>
+                            <li>No more "Failed to fetch analytics" errors</li>
+                        </ul>
+                    `;
+                } else {
+                    result.innerHTML = `
+                        <h2 class="warning">⚠️ Partial Success or Issues</h2>
+                        <p>Some functions may have been created, but there were issues:</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                        <p>Try refreshing the dashboard anyway - some analytics may work now.</p>
+                    `;
+                }
+            } catch (error) {
+                result.innerHTML = `
+                    <h2 class="error">❌ Error</h2>
+                    <p>Failed to create analytics functions:</p>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

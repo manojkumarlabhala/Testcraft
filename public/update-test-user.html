@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Test User</title>
+</head>
+<body>
+    <h1>Update Test User Subscription</h1>
+    <button onclick="updateUser()">Update student.elite@testcraft.in to Student Elite</button>
+    <div id="result"></div>
+
+    <script>
+        async function updateUser() {
+            const result = document.getElementById('result');
+            result.textContent = 'Updating...';
+
+            try {
+                const response = await fetch('/api/admin/update-test-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    result.textContent = 'Success: ' + data.message;
+                } else {
+                    result.textContent = 'Error: ' + data.error;
+                }
+            } catch (error) {
+                result.textContent = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

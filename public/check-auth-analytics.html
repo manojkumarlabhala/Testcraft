@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check Auth & Analytics</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 5px; max-height: 300px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <h1>Check Authentication & Analytics</h1>
+    <button onclick="checkAuth()">Check Auth Status</button>
+    <button onclick="testAnalytics()">Test Analytics API</button>
+    <div id="result"></div>
+
+    <script>
+        async function checkAuth() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>Checking authentication...</p>';
+
+            try {
+                const response = await fetch('/api/debug/subscription', {
+          credentials: 'include'
+        });
+                const data = await response.json();
+
+                result.innerHTML = `
+                    <h2>Authentication Status: ${response.ok ? '<span class="success">✅ Authenticated</span>' : '<span class="error">❌ Not Authenticated</span>'}</h2>
+                    <p>Status Code: ${response.status}</p>
+                    ${response.ok ? `
+                        <h3>User Info:</h3>
+                        <pre>${JSON.stringify(data.user, null, 2)}</pre>
+                        <h3>Subscription:</h3>
+                        <pre>${JSON.stringify(data.subscription, null, 2)}</pre>
+                    ` : `
+                        <h3>Error:</h3>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                        <p><strong>You need to log in first!</strong></p>
+                        <p><a href="/auth/login" target="_blank">Go to Login Page</a></p>
+                    `}
+                `;
+            } catch (error) {
+                result.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            }
+        }
+
+        async function testAnalytics() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>Testing analytics API...</p>';
+
+            try {
+                const response = await fetch('/api/analytics?timeRange=7d', {
+          credentials: 'include'
+        });
+                const data = await response.json();
+
+                result.innerHTML = `
+                    <h2>Analytics API Status: ${response.ok ? '<span class="success">✅ Working</span>' : '<span class="error">❌ Failed</span>'}</h2>
+                    <p>Status Code: ${response.status}</p>
+                    ${response.ok ? `
+                        <h3>Analytics Data:</h3>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    ` : `
+                        <h3>Error:</h3>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                        <p><strong>The analytics error is due to authentication issues.</strong></p>
+                        <p>Please log in first, then refresh this page.</p>
+                    `}
+                `;
+            } catch (error) {
+                result.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            }
+        }
+
+        // Auto-check auth on page load
+        checkAuth();
+    </script>
+</body>
+</html>

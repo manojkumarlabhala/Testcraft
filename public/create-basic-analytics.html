@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Basic Analytics Functions</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        .warning { color: orange; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 5px; }
+        button { padding: 10px 20px; margin: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Fix Analytics Error - Create Basic Functions</h1>
+    <p>This will create the essential analytics functions needed for the dashboard.</p>
+
+    <button onclick="createFunctions()">Create Analytics Functions</button>
+    <button onclick="testAnalytics()">Test Analytics API</button>
+
+    <div id="result"></div>
+
+    <script>
+        async function createFunctions() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>Creating analytics functions...</p>';
+
+            try {
+                const response = await fetch('/api/admin/create-basic-analytics', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    result.innerHTML = `
+                        <h2 class="success">✅ Analytics Functions Created Successfully!</h2>
+                        <p>The analytics error should now be fixed.</p>
+                        <pre>${JSON.stringify(data.stats, null, 2)}</pre>
+                        <p><strong>Next steps:</strong></p>
+                        <ul>
+                            <li>Go to the dashboard</li>
+                            <li>The analytics widget should load properly</li>
+                            <li>No more "Failed to fetch analytics" errors</li>
+                        </ul>
+                    `;
+                } else {
+                    result.innerHTML = `
+                        <h2 class="warning">⚠️ Partial Success</h2>
+                        <p>Some functions may have been created:</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                        <p>Try testing the analytics API anyway.</p>
+                    `;
+                }
+            } catch (error) {
+                result.innerHTML = `
+                    <h2 class="error">❌ Error</h2>
+                    <p>Failed to create analytics functions:</p>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+
+        async function testAnalytics() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>Testing analytics API...</p>';
+
+            try {
+                const response = await fetch('/api/analytics?timeRange=7d');
+                const data = await response.json();
+
+                if (response.ok) {
+                    result.innerHTML = `
+                        <h2 class="success">✅ Analytics API Working!</h2>
+                        <p>Status: ${response.status}</p>
+                        <p>The analytics error has been fixed!</p>
+                        <p><strong>Go to the dashboard now - it should work!</strong></p>
+                    `;
+                } else {
+                    result.innerHTML = `
+                        <h2 class="error">❌ Analytics API Still Failing</h2>
+                        <p>Status: ${response.status}</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                        <p>You may need to log in first, or there might be other issues.</p>
+                    `;
+                }
+            } catch (error) {
+                result.innerHTML = `
+                    <h2 class="error">❌ Error</h2>
+                    <p>Failed to test analytics API:</p>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

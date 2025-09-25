@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quick Login Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        form { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        input { display: block; margin: 10px 0; padding: 8px; width: 300px; }
+        button { padding: 10px 20px; margin: 10px 0; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Quick Login Test</h1>
+    <p>Use this to log in with test credentials before testing analytics.</p>
+
+    <form onsubmit="login(event)">
+        <h3>Login</h3>
+        <input type="email" id="email" placeholder="Email" value="student.elite@testcraft.in" required>
+        <input type="password" id="password" placeholder="Password" value="TestElite@123" required>
+        <button type="submit">Login</button>
+    </form>
+
+    <button onclick="checkAuth()">Check Auth Status</button>
+    <button onclick="testAnalytics()">Test Analytics</button>
+
+    <div id="result"></div>
+
+    <script>
+        async function login(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>Logging in...</p>';
+
+            try {
+                const response = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (response.ok) {
+                    result.innerHTML = '<p class="success">✅ Login successful! You can now test analytics.</p>';
+                    // Redirect to dashboard after a short delay
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 1000);
+                } else {
+                    const data = await response.json();
+                    result.innerHTML = `<p class="error">❌ Login failed: ${data.error || 'Unknown error'}</p>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function checkAuth() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>Checking auth...</p>';
+
+            try {
+                const response = await fetch('/api/debug/subscription', {
+                  credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    result.innerHTML = '<p class="success">✅ You are logged in!</p>';
+                } else {
+                    result.innerHTML = '<p class="error">❌ You are not logged in. Please log in first.</p>';
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function testAnalytics() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>Testing analytics...</p>';
+
+            try {
+                const response = await fetch('/api/analytics?timeRange=7d', {
+                  credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    result.innerHTML = '<p class="success">✅ Analytics API working! Go to dashboard.</p>';
+                } else {
+                    result.innerHTML = `<p class="error">❌ Analytics failed: ${data.error || 'Unknown error'}</p>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

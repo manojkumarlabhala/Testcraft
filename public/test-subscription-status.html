@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Subscription Status</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 5px; }
+        .success { color: green; }
+        .error { color: red; }
+        .warning { color: orange; }
+    </style>
+</head>
+<body>
+    <h1>Test Subscription Status API</h1>
+    <button onclick="testSubscriptionStatus()">Test Subscription Status</button>
+    <div id="result"></div>
+
+    <script>
+        async function testSubscriptionStatus() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>Testing...</p>';
+
+            try {
+                const response = await fetch('/api/payments/subscription-status', {
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                result.innerHTML = `
+                    <h2>Response Status: ${response.status}</h2>
+                    <h3>Response Data:</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+
+                    <h3>Analysis:</h3>
+                    <p><strong>Plan:</strong> ${data.plan || 'undefined'}</p>
+                    <p><strong>Is Active:</strong> ${data.isActive ? 'true' : 'false'}</p>
+                    <p><strong>Chat Access Check:</strong> ${data.plan === "Student Elite" && data.isActive ?
+                        '<span class="success">✅ SHOULD SHOW CHAT WIDGET</span>' :
+                        '<span class="error">❌ WILL SHOW UPGRADE PROMPT</span>'}</p>
+
+                    <h3>Debug Info:</h3>
+                    <p><strong>Expected Plan:</strong> "Student Elite"</p>
+                    <p><strong>Plan Match:</strong> ${data.plan === "Student Elite" ?
+                        '<span class="success">✅ MATCH</span>' :
+                        '<span class="error">❌ NO MATCH</span>'}</p>
+                    <p><strong>Active Status:</strong> ${data.isActive ?
+                        '<span class="success">✅ ACTIVE</span>' :
+                        '<span class="error">❌ INACTIVE</span>'}</p>
+                `;
+
+                if (response.status === 401) {
+                    result.innerHTML += '<p class="warning">⚠️ User is not authenticated. Please log in first.</p>';
+                }
+
+            } catch (error) {
+                result.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            }
+        }
+
+        // Auto-test on page load
+        testSubscriptionStatus();
+    </script>
+</body>
+</html>

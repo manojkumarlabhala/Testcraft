@@ -1,0 +1,303 @@
+# ExamHub India - Production Environment Configuration
+
+# =============================================================================
+# DATABASE CONFIGURATION
+# =============================================================================
+# PostgreSQL Database (Neon recommended for production)
+DATABASE_URL=postgresql://username:password@ep-example-pooler.us-east-1.postgres.vercel-storage.com:5432/examhub_production?sslmode=require
+DATABASE_POOL_SIZE=20
+DATABASE_MAX_CONNECTIONS=100
+
+# =============================================================================
+# AUTHENTICATION & SECURITY
+# =============================================================================
+# Firebase Authentication
+NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyC_example_firebase_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=examhub-india.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=examhub-india
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=examhub-india.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=123456789012
+NEXT_PUBLIC_FIREBASE_APP_ID=1:123456789012:web:abc123def456
+
+# Firebase Admin SDK (Server-side)
+FIREBASE_ADMIN_PROJECT_ID=examhub-india
+FIREBASE_ADMIN_CLIENT_EMAIL=firebase-adminsdk-example@examhub-india.iam.gserviceaccount.com
+FIREBASE_ADMIN_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYOUR_FIREBASE_ADMIN_PRIVATE_KEY\n-----END PRIVATE KEY-----\n"
+
+# JWT Configuration
+JWT_SECRET=your_super_secure_jwt_secret_key_min_32_chars
+JWT_REFRESH_SECRET=your_refresh_token_secret_key_min_32_chars
+JWT_EXPIRES_IN=24h
+JWT_REFRESH_EXPIRES_IN=7d
+
+# Session Management
+SESSION_SECRET=your_session_secret_key_for_express_sessions
+COOKIE_SECRET=your_cookie_signing_secret_key
+
+# =============================================================================
+# PAYMENT GATEWAY (RAZORPAY)
+# =============================================================================
+# Razorpay Live Credentials
+RAZORPAY_KEY_ID=rzp_live_your_actual_key_id
+RAZORPAY_KEY_SECRET=your_actual_razorpay_secret_key
+
+# Razorpay Webhook Configuration
+RAZORPAY_WEBHOOK_SECRET=your_webhook_secret_for_payment_verification
+
+# =============================================================================
+# AI SERVICES
+# =============================================================================
+# OpenAI API for Question Generation
+OPENAI_API_KEY=sk-your_actual_openai_api_key_here
+OPENAI_MODEL=gpt-4
+OPENAI_MAX_TOKENS=2000
+OPENAI_TEMPERATURE=0.7
+
+# Alternative AI Services (Optional)
+ANTHROPIC_API_KEY=your_anthropic_api_key
+GOOGLE_AI_API_KEY=your_google_ai_api_key
+
+# =============================================================================
+# FILE STORAGE & CDN
+# =============================================================================
+# Firebase Storage for PDF Files
+FIREBASE_STORAGE_BUCKET=examhub-india.appspot.com
+
+# Alternative: AWS S3 Configuration
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+AWS_REGION=ap-south-1
+AWS_S3_BUCKET=examhub-papers-production
+
+# CloudFront CDN Distribution
+CLOUDFRONT_DISTRIBUTION_ID=E1234567890ABC
+CLOUDFRONT_DOMAIN=cdn.examhub.in
+
+# =============================================================================
+# EMAIL SERVICES
+# =============================================================================
+# SMTP Configuration for Transactional Emails
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=noreply@examhub.in
+SMTP_PASS=your_app_specific_password
+
+# SendGrid Alternative
+SENDGRID_API_KEY=SG.your_sendgrid_api_key
+SENDGRID_FROM_EMAIL=noreply@examhub.in
+SENDGRID_FROM_NAME=ExamHub India
+
+# =============================================================================
+# MONITORING & ANALYTICS
+# =============================================================================
+# Sentry for Error Tracking
+SENTRY_DSN=https://your_sentry_dsn@sentry.io/project_id
+SENTRY_ENVIRONMENT=production
+SENTRY_RELEASE=v1.0.0
+
+# Google Analytics
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-YOUR_GA4_MEASUREMENT_ID
+
+# Mixpanel for User Analytics
+MIXPANEL_PROJECT_TOKEN=your_mixpanel_project_token
+
+# LogRocket for Session Replay
+LOGROCKET_APP_ID=your_logrocket_app_id
+
+# =============================================================================
+# CACHING & REDIS
+# =============================================================================
+# Redis Configuration for Caching
+REDIS_URL=redis://default:password@your-redis-host:6379
+REDIS_PASSWORD=your_redis_password
+REDIS_DB=0
+REDIS_TTL=3600
+
+# =============================================================================
+# EXTERNAL APIS
+# =============================================================================
+# SMS Gateway for OTP (TextLocal/Twilio)
+TEXTLOCAL_API_KEY=your_textlocal_api_key
+TEXTLOCAL_USERNAME=your_textlocal_username
+TEXTLOCAL_HASH=your_textlocal_hash
+
+# Twilio Alternative
+TWILIO_ACCOUNT_SID=ACyour_twilio_account_sid
+TWILIO_AUTH_TOKEN=your_twilio_auth_token
+TWILIO_PHONE_NUMBER=+1234567890
+
+# Google OAuth for Social Login
+GOOGLE_CLIENT_ID=your_google_oauth_client_id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your_google_oauth_client_secret
+
+# =============================================================================
+# APPLICATION CONFIGURATION
+# =============================================================================
+# Application Environment
+NODE_ENV=production
+PORT=3000
+APP_URL=https://examhub.in
+API_URL=https://api.examhub.in
+
+# Application Features
+ENABLE_AI_FEATURES=true
+ENABLE_PAYMENT_GATEWAY=true
+ENABLE_ANALYTICS=true
+ENABLE_CHAT_SUPPORT=true
+
+# Rate Limiting
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_REQUESTS=100
+
+# File Upload Limits
+MAX_FILE_SIZE=10485760
+ALLOWED_FILE_TYPES=pdf,doc,docx
+
+# =============================================================================
+# SECURITY CONFIGURATION
+# =============================================================================
+# CORS Configuration
+CORS_ORIGIN=https://examhub.in,https://www.examhub.in
+CORS_CREDENTIALS=true
+
+# Content Security Policy
+CSP_ENABLED=true
+CSP_REPORT_URI=https://api.examhub.in/csp-report
+
+# SSL/TLS Configuration
+SSL_CERT_PATH=/etc/ssl/certs/examhub.crt
+SSL_KEY_PATH=/etc/ssl/private/examhub.key
+FORCE_HTTPS=true
+
+# =============================================================================
+# THIRD-PARTY INTEGRATIONS
+# =============================================================================
+# Customer Support (Intercom/Zendesk)
+INTERCOM_APP_ID=your_intercom_app_id
+INTERCOM_ACCESS_TOKEN=your_intercom_access_token
+
+# Push Notifications (Firebase Cloud Messaging)
+FCM_SERVER_KEY=your_fcm_server_key
+
+# Social Media Integration
+FACEBOOK_APP_ID=your_facebook_app_id
+TWITTER_API_KEY=your_twitter_api_key
+LINKEDIN_CLIENT_ID=your_linkedin_client_id
+
+# =============================================================================
+# BACKUP & DISASTER RECOVERY
+# =============================================================================
+# Database Backup Configuration
+BACKUP_SCHEDULE=0 2 * * *
+BACKUP_RETENTION_DAYS=30
+BACKUP_S3_BUCKET=examhub-backups
+
+# =============================================================================
+# PERFORMANCE & OPTIMIZATION
+# =============================================================================
+# CDN Configuration
+CDN_ENABLED=true
+CDN_URL=https://cdn.examhub.in
+
+# Cache Configuration
+CACHE_ENABLED=true
+CACHE_TTL=3600
+STATIC_CACHE_TTL=86400
+
+# Image Optimization
+IMAGE_OPTIMIZATION=true
+IMAGE_QUALITY=80
+IMAGE_FORMATS=webp,jpg,png
+
+# =============================================================================
+# LOGGING CONFIGURATION
+# =============================================================================
+# Log Levels: error, warn, info, debug
+LOG_LEVEL=info
+LOG_FORMAT=json
+LOG_FILE_PATH=/var/log/examhub/app.log
+
+# =============================================================================
+# HEALTH CHECKS & MONITORING
+# =============================================================================
+# Health Check Configuration
+HEALTH_CHECK_ENABLED=true
+HEALTH_CHECK_INTERVAL=30000
+
+# Uptime Monitoring
+UPTIME_ROBOT_API_KEY=your_uptimerobot_api_key
+
+# =============================================================================
+# LEGAL & COMPLIANCE
+# =============================================================================
+# Privacy & Cookie Policy
+COOKIE_CONSENT_ENABLED=true
+GDPR_COMPLIANCE=true
+DATA_RETENTION_DAYS=2555
+
+# Terms of Service
+TOS_VERSION=v2.0
+PRIVACY_POLICY_VERSION=v2.0
+
+# =============================================================================
+# FEATURE FLAGS
+# =============================================================================
+# Progressive Feature Rollout
+FEATURE_NEW_DASHBOARD=true
+FEATURE_AI_TUTORING=false
+FEATURE_LIVE_CLASSES=false
+FEATURE_BLOCKCHAIN_CERTIFICATES=false
+
+# A/B Testing
+AB_TESTING_ENABLED=true
+AB_TEST_TRAFFIC_SPLIT=50
+
+# =============================================================================
+# DEVELOPMENT & TESTING
+# =============================================================================
+# Only for non-production environments
+DEBUG_MODE=false
+MOCK_EXTERNAL_APIS=false
+SEED_TEST_DATA=false
+
+# =============================================================================
+# DEPLOYMENT CONFIGURATION
+# =============================================================================
+# CI/CD Configuration
+VERCEL_TOKEN=your_vercel_deployment_token
+GITHUB_TOKEN=your_github_actions_token
+
+# Docker Configuration
+DOCKER_REGISTRY=ghcr.io
+DOCKER_IMAGE_TAG=latest
+
+# Kubernetes Configuration (if using K8s)
+KUBERNETES_NAMESPACE=examhub-production
+KUBERNETES_CONFIG_PATH=/etc/kubernetes/config
+
+# =============================================================================
+# BUSINESS CONFIGURATION
+# =============================================================================
+# Subscription Plans
+FREE_PLAN_LIMIT_PAPERS=5
+FREE_PLAN_LIMIT_TESTS=3
+PREMIUM_PLAN_PRICE=299
+INSTITUTIONAL_PLAN_PRICE=15000
+
+# Commission & Revenue
+AFFILIATE_COMMISSION_RATE=0.1
+PAYMENT_PROCESSING_FEE=0.02
+
+# =============================================================================
+# LOCALIZATION
+# =============================================================================
+# Multi-language Support
+DEFAULT_LANGUAGE=en
+SUPPORTED_LANGUAGES=en,hi,ta,te,bn,mr,gu
+RTL_LANGUAGES=ur
+
+# Currency & Regional Settings
+DEFAULT_CURRENCY=INR
+DEFAULT_TIMEZONE=Asia/Kolkata
+DEFAULT_COUNTRY=IN

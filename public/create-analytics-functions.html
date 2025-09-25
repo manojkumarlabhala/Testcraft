@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Analytics Functions</title>
+</head>
+<body>
+    <h1>Create Analytics Functions</h1>
+    <button onclick="createFunctions()">Create Analytics Functions</button>
+    <div id="result"></div>
+
+    <script>
+        async function createFunctions() {
+            const result = document.getElementById('result');
+            result.textContent = 'Creating analytics functions...';
+
+            try {
+                const response = await fetch('/api/admin/create-analytics-functions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    result.textContent = 'Success: ' + data.message;
+                } else {
+                    result.textContent = 'Error: ' + data.error;
+                }
+            } catch (error) {
+                result.textContent = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

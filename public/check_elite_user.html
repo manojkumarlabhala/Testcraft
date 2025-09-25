@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check Elite User Subscription</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 5px; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Check Student Elite User Subscription</h1>
+    <button onclick="checkUser()">Check student.elite@testcraft.in</button>
+    <div id="result"></div>
+
+    <script>
+        async function checkUser() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>Checking...</p>';
+
+            try {
+                // Try to get subscription status (will fail if not logged in)
+                const response = await fetch('/api/debug/subscription');
+                const data = await response.json();
+
+                if (response.ok) {
+                    result.innerHTML = `
+                        <h2 class="success">✅ User is authenticated</h2>
+                        <h3>User Info:</h3>
+                        <pre>${JSON.stringify(data.user, null, 2)}</pre>
+                        <h3>Profile:</h3>
+                        <pre>${JSON.stringify(data.profile, null, 2)}</pre>
+                        <h3>Subscription:</h3>
+                        <pre>${JSON.stringify(data.subscription, null, 2)}</pre>
+                        <h3>Analysis:</h3>
+                        <p><strong>Subscription Plan:</strong> ${data.profile?.subscription_plan || 'None'}</p>
+                        <p><strong>AI Chat Access:</strong> ${data.profile?.subscription_plan === 'Student Elite' ? '<span class="success">✅ YES</span>' : '<span class="error">❌ NO</span>'}</p>
+                    `;
+                } else {
+                    result.innerHTML = `<p class="error">❌ Not authenticated: ${data.error}</p>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            }
+        }
+
+        // Auto-check on page load
+        checkUser();
+    </script>
+</body>
+</html>

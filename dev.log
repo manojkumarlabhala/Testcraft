@@ -1,0 +1,199 @@
+
+> testcraft-in@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.2.4
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.1.8:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1780ms
+ ✓ Compiled /middleware in 290ms (215 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 3.5s (2476 modules)
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET / 200 in 3983ms
+ ○ Compiling /admin/super-admin-dashboard ...
+ ✓ Compiled /admin/super-admin-dashboard in 1779ms (2629 modules)
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET /admin/super-admin-dashboard 200 in 1936ms
+ ✓ Compiled /auth/login in 482ms (2622 modules)
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET /auth/login 200 in 805ms
+ ○ Compiling /api/admin/platform-stats ...
+ ✓ Compiled /api/admin/platform-stats in 732ms (2708 modules)
+ GET /api/admin/platform-stats 403 in 758ms
+ GET /api/admin/sponsored-ads 403 in 839ms
+ GET /api/admin/payment-links 200 in 871ms
+ GET /api/admin/sponsored-ads 403 in 6ms
+ GET /api/admin/payment-links 200 in 5ms
+ GET /api/admin/platform-stats 403 in 7ms
+ ○ Compiling /api/admin/seo-settings/pricing ...
+ ✓ Compiled /api/admin/seo-settings/pricing in 516ms (2714 modules)
+ GET /api/admin/subscription-plans 200 in 556ms
+ GET /api/admin/plan-features 200 in 559ms
+ GET /api/admin/seo-settings/pricing 200 in 510ms
+ GET /api/admin/seo-settings/pricing 200 in 6ms
+ GET /api/admin/plan-features 200 in 5ms
+ GET /api/admin/subscription-plans 200 in 6ms
+ ✓ Compiled /_not-found in 436ms (2718 modules)
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ PUT /api/admin/plan-features/3 404 in 521ms
+ PUT /api/admin/plan-features/3 404 in 52ms
+ PUT /api/admin/plan-features/3 404 in 18ms
+ PUT /api/admin/plan-features/3 404 in 36ms
+ PUT /api/admin/plan-features/3 404 in 25ms
+ PUT /api/admin/plan-features/3 404 in 48ms
+ PUT /api/admin/plan-features/9 404 in 36ms
+ PUT /api/admin/plan-features/9 404 in 17ms
+ PUT /api/admin/plan-features/8 404 in 15ms
+ DELETE /api/admin/plan-features/4 404 in 42ms
+ DELETE /api/admin/plan-features/3 404 in 24ms
+ GET /admin/super-admin-dashboard 200 in 177ms
+ GET /auth/login 200 in 74ms
+ GET /api/admin/platform-stats 403 in 41ms
+ GET /api/admin/payment-links 200 in 19ms
+ GET /api/admin/sponsored-ads 403 in 13ms
+ GET /api/admin/platform-stats 403 in 19ms
+ GET /api/admin/sponsored-ads 403 in 5ms
+ GET /api/admin/payment-links 200 in 4ms
+ GET /api/admin/subscription-plans 200 in 10ms
+ GET /api/admin/plan-features 200 in 19ms
+ GET /api/admin/seo-settings/pricing 200 in 25ms
+ GET /api/admin/subscription-plans 200 in 5ms
+ GET /api/admin/plan-features 200 in 5ms
+ GET /api/admin/seo-settings/pricing 200 in 4ms
+ PUT /api/admin/plan-features/3 404 in 45ms
+ PUT /api/admin/plan-features/3 404 in 21ms
+ PUT /api/admin/plan-features/3 404 in 19ms
+ PUT /api/admin/plan-features/2 404 in 20ms
+ PUT /api/admin/plan-features/2 404 in 18ms
+ PUT /api/admin/plan-features/2 404 in 18ms
+ DELETE /api/admin/plan-features/4 404 in 19ms
+ GET /admin/super-admin-dashboard 200 in 28ms
+ GET /auth/login 200 in 40ms
+ GET /api/admin/platform-stats 403 in 6ms
+ GET /api/admin/payment-links 200 in 5ms
+ GET /api/admin/sponsored-ads 403 in 5ms
+ GET /api/admin/platform-stats 403 in 5ms
+ GET /api/admin/payment-links 200 in 4ms
+ GET /api/admin/sponsored-ads 403 in 3ms
+ GET /api/admin/subscription-plans 200 in 6ms
+ GET /api/admin/seo-settings/pricing 200 in 6ms
+ GET /api/admin/plan-features 200 in 6ms
+ GET /api/admin/subscription-plans 200 in 6ms
+ GET /api/admin/seo-settings/pricing 200 in 5ms
+ GET /api/admin/plan-features 200 in 4ms
+ ○ Compiling /api/admin/subscription-plans/[id] ...
+ ✓ Compiled /api/admin/subscription-plans/[id] in 563ms (1938 modules)
+Error: Route "/api/admin/subscription-plans/[id]" used `params.id`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at PUT (app/api/admin/subscription-plans/[id]/route.ts:9:26)
+   7 |   try {
+   8 |     const planData = await request.json()
+>  9 |     const planId = params.id
+     |                          ^
+  10 |
+  11 |     // In a real implementation, update in database
+  12 |     const updatedPlan = {
+Updating subscription plan: 2 {
+  id: '2',
+  name: 'premium',
+  displayName: 'Premium Plan',
+  description: 'Comprehensive preparation package with unlimited tests, detailed analytics, and expert support for serious aspirants.',
+  shortDescription: 'Complete preparation solution',
+  price: 299,
+  originalPrice: 399,
+  currency: 'INR',
+  billingCycle: 'yearly',
+  category: 'student',
+  features: [
+    'Unlimited Mock Tests',
+    'Detailed Performance Analytics',
+    'AI Tutor 24/7 Avalibility',
+    'Previous Year Papers',
+    'Priority Support',
+    'Mobile & Web Access'
+  ],
+  limitations: [ 'No 1-on-1 mentorship', 'No live classes' ],
+  isPopular: true,
+  isActive: true,
+  seoTitle: 'Premium Mock Tests ₹299/year - NEET, JEE, CBSE Preparation',
+  seoDescription: 'Premium subscription with unlimited mock tests, expert doubt solving, and detailed analytics. Perfect for NEET, JEE, and CBSE preparation.',
+  seoKeywords: [
+    'premium mock tests',
+    'NEET preparation premium',
+    'JEE premium plan',
+    'unlimited tests',
+    'expert support'
+  ],
+  targetAudience: [
+    'Serious aspirants',
+    'Regular users',
+    'Students needing expert help'
+  ],
+  testimonials: [
+    {
+      name: 'Arjun Patel',
+      role: 'JEE Aspirant',
+      content: 'Amazing value for money! The detailed analytics helped me improve significantly.',
+      rating: 5
+    },
+    {
+      name: 'Sneha Gupta',
+      role: 'NEET Student',
+      content: 'Expert doubt solving is a game-changer. Highly recommended!',
+      rating: 5
+    }
+  ],
+  stats: {
+    totalSubscribers: 8930,
+    conversionRate: 18.2,
+    churnRate: 12.5,
+    averageRating: 4.6
+  },
+  createdAt: '2024-01-01',
+  updatedAt: '2025-09-24T03:34:06.226Z'
+}
+ PUT /api/admin/subscription-plans/2 200 in 1295ms
+ ✓ Compiled /api/admin/subscription-plans in 72ms (711 modules)
+ GET /api/admin/subscription-plans 200 in 110ms
+ ✓ Compiled /api/admin/plan-features in 270ms (709 modules)
+ ✓ Compiled (713 modules)
+ GET /api/admin/subscription-plans 200 in 364ms
+ GET /api/admin/seo-settings/pricing 200 in 370ms
+ GET /api/admin/plan-features 200 in 349ms
+ GET /api/admin/seo-settings/pricing 200 in 7ms
+ GET /api/admin/plan-features 200 in 5ms
+ GET /api/admin/subscription-plans 200 in 4ms
+ ✓ Compiled in 4.7s (1936 modules)
+ ○ Compiling /api/admin/platform-stats ...
+ ✓ Compiled /api/admin/platform-stats in 630ms (775 modules)
+ ✓ Compiled (779 modules)
+ GET /api/admin/platform-stats 403 in 1397ms
+ GET /api/admin/sponsored-ads 403 in 1509ms
+ GET /api/admin/payment-links 200 in 1411ms
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET /admin/super-admin-dashboard 200 in 1666ms
+ GET /api/admin/platform-stats 403 in 5ms
+ GET /api/admin/payment-links 200 in 5ms
+ GET /api/admin/sponsored-ads 403 in 5ms
+ ✓ Compiled /auth/login in 151ms (784 modules)
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET /auth/login 200 in 462ms
+ ✓ Compiled in 3.5s (1936 modules)
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET /admin/super-admin-dashboard 200 in 192ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 708ms (1926 modules)
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET /_next/static/css/app/layout.css?v=1758686182807 404 in 881ms
+ ✓ Compiled /auth/login in 154ms (699 modules)
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET /auth/login 200 in 396ms
+ ✓ Compiled in 59.4s (1936 modules)
+ ✓ Compiled in 2.1s (1936 modules)
+ ✓ Compiled in 1649ms (1882 modules)
+ ✓ Compiled in 542ms (1882 modules)
+ ✓ Compiled in 527ms (1882 modules)
+[?25h

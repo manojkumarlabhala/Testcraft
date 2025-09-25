@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Analytics API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 5px; max-height: 300px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <h1>Test Analytics API</h1>
+    <button onclick="testAnalytics()">Test Analytics API</button>
+    <div id="result"></div>
+
+    <script>
+        async function testAnalytics() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>Testing analytics API...</p>';
+
+            try {
+                const response = await fetch('/api/analytics?timeRange=7d');
+                const data = await response.json();
+
+                if (response.ok) {
+                    result.innerHTML = `
+                        <h2 class="success">✅ Analytics API Working!</h2>
+                        <p>Status: ${response.status}</p>
+                        <h3>Data Structure:</h3>
+                        <pre>${JSON.stringify({
+                            userStats: data.userStats,
+                            testStats: data.testStats,
+                            performanceDataCount: data.performanceData?.length || 0,
+                            subjectPerformanceCount: data.subjectPerformance?.length || 0,
+                            monthlyActivityCount: data.monthlyActivity?.length || 0,
+                            topPerformersCount: data.topPerformers?.length || 0
+                        }, null, 2)}</pre>
+                        <p><strong>The analytics error should now be resolved!</strong></p>
+                        <p>Go back to the dashboard and refresh - the analytics widget should load properly.</p>
+                    `;
+                } else {
+                    result.innerHTML = `
+                        <h2 class="error">❌ Analytics API Failed</h2>
+                        <p>Status: ${response.status}</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                result.innerHTML = `
+                    <h2 class="error">❌ Error</h2>
+                    <p>Failed to test analytics API:</p>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+
+        // Auto-test on page load
+        testAnalytics();
+    </script>
+</body>
+</html>

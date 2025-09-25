@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Chat Activation</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        .warning { color: orange; }
+        button { padding: 10px 20px; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Test Chat Activation for Student Elite User</h1>
+
+    <div id="status">
+        <p>Checking user status...</p>
+    </div>
+
+    <div id="chat-test">
+        <h2>Chat Component Test</h2>
+        <div id="chat-placeholder">Chat component would appear here</div>
+    </div>
+
+    <script>
+        async function checkUserStatus() {
+            const status = document.getElementById('status');
+
+            try {
+                const subResponse = await fetch('/api/payments/subscription-status', {
+                    credentials: 'include'
+                });
+
+                let subData = { plan: 'unknown', isActive: false };
+                if (subResponse.ok) {
+                    subData = await subResponse.json();
+                }
+
+                // Check user profile
+                const profileResponse = await fetch('/api/user/profile', {
+                    credentials: 'include'
+                });
+
+                let userEmail = 'unknown';
+                if (profileResponse.ok) {
+                    const profileData = await profileResponse.json();
+                    userEmail = profileData.email || 'no email';
+                }
+
+                status.innerHTML = `
+                    <h3>User Status:</h3>
+                    <p><strong>Email:</strong> ${userEmail}</p>
+                    <p><strong>Plan:</strong> ${subData.plan}</p>
+                    <p><strong>Is Active:</strong> ${subData.isActive}</p>
+                    <p><strong>Should Show Chat:</strong> ${subData.plan === "Student Elite" && subData.isActive ?
+                        '<span class="success">✅ YES</span>' :
+                        '<span class="error">❌ NO</span>'}</p>
+                    <p><strong>Test User Button:</strong> ${userEmail === 'student.elite@testcraft.in' ?
+                        '<span class="success">✅ SHOULD SHOW</span>' :
+                        '<span class="warning">⚠️ SHOULD NOT SHOW</span>'}</p>
+                `;
+
+            } catch (error) {
+                status.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            }
+        }
+
+        // Auto-check on page load
+        checkUserStatus();
+
+        // Refresh every 5 seconds
+        setInterval(checkUserStatus, 5000);
+    </script>
+</body>
+</html>
